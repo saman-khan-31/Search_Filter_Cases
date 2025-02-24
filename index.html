@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Case Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .filter-container {
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .filter-btn {
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            background-color: #808080;
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .filter-btn.active {
+            background-color: #007BFF;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h3>Case Attributes:</h3>
+    <div class="filter-container">
+        <button class="filter-btn" onclick="toggleFilter('Custody Dispute')">Custody Dispute</button>
+        <button class="filter-btn" onclick="toggleFilter('Spousal Support')">Spousal Support</button>
+        <button class="filter-btn" onclick="toggleFilter('Divorce Grounds')">Divorce Grounds</button>
+        <button class="filter-btn" onclick="toggleFilter('Child Support')">Child Support</button>
+        <button class="filter-btn" onclick="toggleFilter('Legal Procedural Issue')">Legal Procedural Issue</button>
+        <button class="filter-btn" onclick="toggleFilter('Settlement Agreement')">Settlement Agreement</button>
+        <button class="filter-btn" onclick="toggleFilter('Parental Rights')">Parental Rights</button>
+        <button class="filter-btn" onclick="toggleFilter('Court Ruling Overturned')">Court Ruling Overturned</button>
+    </div>
+
+    <h3>Search Cases:</h3>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search by case name, summary, or parties involved">
+        <button onclick="filterCases()">Search</button>
+    </div>
+
+    <table id="caseTable">
+        <thead>
+            <tr>
+                <th>Case ID</th>
+                <th>Case Name</th>
+                <th>Latest Hearing</th>
+                <th>Case Summary</th>
+                <th>Parties Involved</th>
+            </tr>
+        </thead>
+        <tbody>
+           <!-- Cases Data -->
+           <tr data-tags="Custody Dispute,Child Support,Legal Procedural Issue,Court Ruling Overturned,Public Order Consideration">
+            <td>1</td>
+            <td>Custody and Educational Guardianship Dispute</td>
+            <td>15/01/2020</td>
+            <td>A mother sought full custody of her children and the authority to transfer them to a private school, arguing that the father was not providing a suitable educational environment.</td>
+            <td>Mother vs. Father</td>
+        </tr>
+        <tr data-tags="Spousal Support,Divorce Grounds,Parental Rights">
+            <td>2</td>
+            <td>Divorce Due to Marital Discord</td>
+            <td>22/01/2020</td>
+            <td>A wife filed for divorce, claiming she faced emotional abuse and marital neglect. The husband denied the allegations and requested the court to dismiss the case.</td>
+            <td>Wife vs. Husband</td>
+        </tr>
+        <tr data-tags="Custody Dispute,Child Support,Settlement Agreement,Parental Rights">
+            <td>3</td>
+            <td>Child Support and Parental Responsibility</td>
+            <td>05/02/2020</td>
+            <td>A mother sought an increase in child support, claiming the father's income had significantly improved. The father argued that the existing child support was sufficient.</td>
+            <td>Mother vs. Father</td>
+        </tr>
+        <tr data-tags="Divorce Grounds,Legal Procedural Issue">
+            <td>4</td>
+            <td>Enforceability of Prenuptial Agreements</td>
+            <td>12/02/2020</td>
+            <td>A husband attempted to enforce a prenuptial agreement limiting his wife’s financial claims. The wife argued that the contract was signed under duress and contradicted Sharia law.</td>
+            <td>Husband vs. Wife</td>
+        </tr>
+        <tr data-tags="Spousal Support,Settlement Agreement">
+            <td>5</td>
+            <td>Financial Entitlements in Divorce</td>
+            <td>19/02/2020</td>
+            <td>A wife sought full financial compensation in divorce, including alimony, deferred dowry, and a compensation package.</td>
+            <td>Wife vs. Husband</td>
+        </tr>
+        <tr data-tags="Legal Procedural Issue,Court Ruling Overturned">
+            <td>6</td>
+            <td>Procedural Deficiency Leading to Nullification of Judgment</td>
+            <td>03/03/2020</td>
+            <td>A judgment was challenged on procedural grounds because it lacked the signature of one of the judges.</td>
+            <td>Appellant vs. Opposing party</td>
+        </tr>
+        <tr data-tags="Custody Dispute,Parental Rights">
+            <td>7</td>
+            <td>Relocation and Custody Dispute</td>
+            <td>10/03/2020</td>
+            <td>A father sought to prevent the mother from relocating with their child. The court allowed the relocation but modified visitation rights.</td>
+            <td>Father vs. Mother</td>
+        </tr>
+        <tr data-tags="Settlement Agreement,Parental Rights">
+            <td>8</td>
+            <td>Custody Settlement Challenge</td>
+            <td>18/03/2020</td>
+            <td>A father attempted to challenge a custody settlement agreement. The court ruled that the agreement was binding.</td>
+            <td>Father vs. Mother</td>
+        </tr>
+        <tr data-tags="Custody Dispute,Public Order Consideration">
+            <td>9</td>
+            <td>Educational Guardianship Decision</td>
+            <td>22/03/2020</td>
+            <td>A father wanted to transfer daughters from private to public school. The court ruled in his favor as the legal guardian.</td>
+            <td>Father vs. School Authority</td>
+        </tr>
+        <tr data-tags="Divorce Grounds,Financial Support">
+            <td>10</td>
+            <td>Polygamy and Divorce Rights</td>
+            <td>28/03/2020</td>
+            <td>A wife filed for divorce because her husband married another woman. The court ruled that polygamy alone is not a ground for divorce but granted her full financial rights.</td>
+            <td>Wife vs. Husband</td>
+        </tr>
+
+
+        <tr data-tags="Custody Dispute,Parental Rights">
+            <td>11</td>
+            <td>Dispute Over Custody Agreement</td>
+            <td>19/03/2019</td>
+            <td>A father sought to annul a prior custody agreement, arguing that the mother violated it by taking the children from their aunt’s care. The court ruled in favor of the mother, prioritizing the children's best interests.</td>
+            <td>Father vs. Mother</td>
+        </tr>
+        <tr data-tags="Custody Dispute,Legal Procedural Issue">
+            <td>12</td>
+            <td>Custody and Procedural Irregularities</td>
+            <td>13/10/2018</td>
+            <td>The mother sought to retain custody while the father challenged her eligibility. The court found procedural errors in the ruling and deemed it invalid, maintaining custody with the mother.</td>
+            <td>Mother vs. Father</td>
+        </tr>
+        <!-- Add all 12 cases similarly -->
+        </tbody>
+    </table>
+
+    <script>
+        let selectedFilters = [];
+        
+        function toggleFilter(category) {
+            let index = selectedFilters.indexOf(category);
+            if (index > -1) {
+                selectedFilters.splice(index, 1);
+            } else {
+                selectedFilters.push(category);
+            }
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (selectedFilters.includes(btn.innerText)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            filterCases();
+        }
+        
+        function filterCases() {
+            let query = document.getElementById('searchInput').value.toLowerCase();
+            document.querySelectorAll('#caseTable tbody tr').forEach(row => {
+                let caseName = row.cells[1].innerText.toLowerCase();
+                let caseSummary = row.cells[3].innerText.toLowerCase();
+                let partiesInvolved = row.cells[4].innerText.toLowerCase();
+                let caseTags = row.getAttribute('data-tags').split(',');
+                
+                let matchesSearch = query === "" || caseName.includes(query) || caseSummary.includes(query) || partiesInvolved.includes(query);
+                let matchesFilters = selectedFilters.length === 0 || selectedFilters.every(filter => caseTags.includes(filter));
+                
+                row.style.display = matchesSearch && matchesFilters ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
